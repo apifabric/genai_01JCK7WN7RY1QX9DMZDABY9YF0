@@ -1,0 +1,130 @@
+<div class="container">
+<o-form-container breadcrumb="yes" breadcrumb-label-columns="name" breadcrumb-separator=", " class="fill-form">
+      <o-form #form attr="Habitat_form_edit" 
+        service="Habitat" 
+        entity="Habitat" 
+        fxLayout="column" 
+        show-header="yes" 
+        header-actions="R;I;U;D"
+        #oDetailForm keys="id" 
+        keys-sql-types="INTEGER" 
+        show-header-navigation="yes"
+        (onDataLoaded)="onDataLoaded($event)">
+
+  <o-row attr="row1" layout-align="start stretch">
+    <div fxLayout="row wrap" fxLayoutAlign="start start" fxFlex fxLayoutGap="14px">
+      
+      <o-text-input #name attr="name" label=" name*" enabled="yes" required="no" fxFlex="20%" class="form-field"></o-text-input>
+      
+      <o-text-input #climate attr="climate" label="climate" enabled="yes" required="no" fxFlex="20%" class="form-field"></o-text-input>
+      
+      <o-integer-input #id attr="id" label="id" type="integer" editable="no" required="no" ></o-integer-input>
+      
+    </div>
+  </o-row>
+      
+      <mat-tab-group fxFill>
+        
+        <mat-tab label="ANIMAL-habitat_id">
+    <div layout-padding>
+      <o-table 
+        attr="AnimalTable" 
+        service="Animal" 
+        entity="Animal" 
+        keys="id"
+        parent-keys="habitat_id:id"
+        columns="common_name;habitat_id;species;population;id"  
+        horizontal-scroll="yes"
+        detail-form-route="Animal" 
+        edit-form-route="Animal"
+        visible-columns="common_name;habitat_id;species;population;id"  
+        sort-columns="common_name" 
+        query-rows="25" 
+        quick-filter="yes"
+        row-height="medium" 
+        select-all-checkbox="true" 
+        pageable="yes"  
+        auto-adjust="true" 
+        virtual-scroll="yes" 
+        insert-button="yes" 
+        delete-button="yes" 
+        fixed-header="true" 
+        class="vertical-padding-8"
+        edition-mode="dblclick" 
+        horizontal-scroll="yes" class="fill-form">
+        
+          <o-table-column #common_name attr="common_name" title=" common_name*" editable="no" required="no" content-align="left"></o-table-column>
+        
+          <o-table-column attr="habitat_id" title="habitat_id">
+    <o-table-cell-renderer-service attr="habitat_id" 
+        service="Habitat" entity="HabitatType" columns="id;name"
+        parent-keys="id:habitat_id"
+        value-column="name" keys="habitat_id"
+        visible-columns="name" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+        
+          <o-table-column #species attr="species" title="species" editable="no" required="no" content-align="left"></o-table-column>
+        
+          <o-table-column #population attr="population" title="population" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+        
+          <o-table-column #id attr="id" title="id" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+        
+        <o-table-paginator page-size-options="25;50;100"></o-table-paginator>
+      </o-table>
+    </div>
+</mat-tab>
+        
+        <mat-tab label="PLANT-habitat_id">
+    <div layout-padding>
+      <o-table 
+        attr="PlantTable" 
+        service="Plant" 
+        entity="Plant" 
+        keys="id"
+        parent-keys="habitat_id:id"
+        columns="species_name;habitat_id;common_name;id"  
+        horizontal-scroll="yes"
+        detail-form-route="Plant" 
+        edit-form-route="Plant"
+        visible-columns="species_name;habitat_id;common_name;id"  
+        sort-columns="species_name" 
+        query-rows="25" 
+        quick-filter="yes"
+        row-height="medium" 
+        select-all-checkbox="true" 
+        pageable="yes"  
+        auto-adjust="true" 
+        virtual-scroll="yes" 
+        insert-button="yes" 
+        delete-button="yes" 
+        fixed-header="true" 
+        class="vertical-padding-8"
+        edition-mode="dblclick" 
+        horizontal-scroll="yes" class="fill-form">
+        
+          <o-table-column #species_name attr="species_name" title=" species_name*" editable="no" required="no" content-align="left"></o-table-column>
+        
+          <o-table-column attr="habitat_id" title="habitat_id">
+    <o-table-cell-renderer-service attr="habitat_id" 
+        service="Habitat" entity="HabitatType" columns="id;name"
+        parent-keys="id:habitat_id"
+        value-column="name" keys="habitat_id"
+        visible-columns="name" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+        
+          <o-table-column #common_name attr="common_name" title="common_name" editable="no" required="no" content-align="left"></o-table-column>
+        
+          <o-table-column #id attr="id" title="id" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+        
+        <o-table-paginator page-size-options="25;50;100"></o-table-paginator>
+      </o-table>
+    </div>
+</mat-tab>
+        
+      </mat-tab-group>
+      
+    </o-form>
+  </o-form-container>
+</div>

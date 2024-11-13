@@ -1,0 +1,44 @@
+<o-form-layout-manager attr="RangerPatrol" mode="tab" title="RANGERPATROL">
+    <div fxFill fxLayout="column" fxLayoutAlign="start">
+        <o-table 
+            attr="RangerPatrolTable" 
+            service="RangerPatrol" 
+            entity="RangerPatrol" 
+            title="RANGERPATROL"
+            keys="id"
+            columns="id;ranger_id;date;area_patrolled" 
+            header-actions="R;D"
+            visible-columns="id;ranger_id;date;area_patrolled"  
+            sort-columns="id" 
+            query-rows="20" 
+            quick-filter="yes"
+            row-height="medium" 
+            select-all-checkbox="true" 
+            pageable="yes"  
+            auto-adjust="true" 
+            virtual-scroll="yes" 
+            edition-mode="dblclick"
+            horizontal-scroll="yes"
+            show-title="yes"
+            export-button="yes">
+            
+            <o-table-column #id attr="id" title=" id*" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+            
+            <o-table-column attr="ranger_id" title="ranger_id">
+    <o-table-cell-renderer-service attr="ranger_id" 
+        service="Ranger" entity="RangerType" columns="id;name"
+        parent-keys="id:ranger_id"
+        value-column="name" keys="ranger_id"
+        visible-columns="name" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+            
+            <o-date-input #date attr="date" type="timestamp" label="date" editable="no" required="no" format="LL" fxFlex="20%" class="form-field"></o-date-input>
+            
+            <o-table-column #area_patrolled attr="area_patrolled" title="area_patrolled" editable="no" required="no" content-align="left"></o-table-column>
+            
+            <o-table-context-menu></o-table-context-menu>
+            <o-table-paginator page-size-options="24;48;96"></o-table-paginator>
+        </o-table>
+    </div>
+</o-form-layout-manager>

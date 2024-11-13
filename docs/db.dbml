@@ -1,0 +1,119 @@
+// Copy this text, paste to https://dbdiagram.io/d
+// Or, https://databasediagram.com/app
+// Or, view in VSCode with extension: "DBML Live Preview"
+
+Project DBML {
+  Note: '''
+Animal: Represents an animal in the tropical rainforest.
+Habitat: Represents different types of habitats in the rainforest.
+ConservationProject: Represents conservation projects aimed at preserving wildlife.
+EndangeredSpeciesList: Represents lists of endangered species.
+IllegalActivity: Represents illegal activities reported in the rainforest.
+PatrolIncident: Represents incidents reported during ranger patrols.
+RangerPatrol: Represents ranger patrols conducted in the rainforest.
+Plant: Represents a plant species found in the rainforest.
+Ranger: Represents a ranger responsible for patrolling the rainforest.
+ResearchStudy: Represents scientific research studies conducted in the rainforest.
+Researcher: Represents a researcher involved in rainforest studies.
+ResearcherStudyLink: Represents the link between researchers and research studies.
+'''
+}
+
+Table Animal {
+    id INTEGER [primary key]
+    species VARCHAR 
+    common_name VARCHAR 
+    habitat_id INTEGER 
+    population INTEGER 
+    }
+
+Table Habitat {
+    id INTEGER [primary key]
+    name VARCHAR 
+    climate VARCHAR 
+    }
+
+Table ConservationProject {
+    id INTEGER [primary key]
+    name VARCHAR 
+    start_date DATETIME 
+    end_date DATETIME 
+    species_target_id INTEGER 
+    }
+
+Table EndangeredSpeciesList {
+    id INTEGER [primary key]
+    species_id INTEGER 
+    status VARCHAR 
+    list_date DATETIME 
+    }
+
+Table IllegalActivity {
+    id INTEGER [primary key]
+    Type VARCHAR 
+    report_date DATETIME 
+    location VARCHAR 
+    involved_species_id INTEGER 
+    }
+
+Table PatrolIncident {
+    id INTEGER [primary key]
+    patrol_id INTEGER 
+    description VARCHAR 
+    date_reported DATETIME 
+    }
+
+Table RangerPatrol {
+    id INTEGER [primary key]
+    ranger_id INTEGER 
+    date DATETIME 
+    area_patrolled VARCHAR 
+    }
+
+Table Plant {
+    id INTEGER [primary key]
+    species_name VARCHAR 
+    common_name VARCHAR 
+    habitat_id INTEGER 
+    }
+
+Table Ranger {
+    id INTEGER [primary key]
+    name VARCHAR 
+    assigned_area VARCHAR 
+    experience_years INTEGER 
+    }
+
+Table ResearchStudy {
+    id INTEGER [primary key]
+    title VARCHAR 
+    focus_area VARCHAR 
+    start_date DATETIME 
+    end_date DATETIME 
+    study_lead VARCHAR 
+    }
+
+Table Researcher {
+    id INTEGER [primary key]
+    name VARCHAR 
+    specialization VARCHAR 
+    }
+
+Table ResearcherStudyLink {
+    id INTEGER [primary key]
+    researcher_id INTEGER 
+    study_id INTEGER 
+    }
+
+
+
+// Relationships
+    Ref: Animal.(habitat_id) < Habitat.(id)
+    Ref: ConservationProject.(species_target_id) < Animal.(id)
+    Ref: EndangeredSpeciesList.(species_id) < Animal.(id)
+    Ref: IllegalActivity.(involved_species_id) < Animal.(id)
+    Ref: PatrolIncident.(patrol_id) < RangerPatrol.(id)
+    Ref: RangerPatrol.(ranger_id) < Ranger.(id)
+    Ref: Plant.(habitat_id) < Habitat.(id)
+    Ref: ResearcherStudyLink.(researcher_id) < Researcher.(id)
+    Ref: ResearcherStudyLink.(study_id) < ResearchStudy.(id)

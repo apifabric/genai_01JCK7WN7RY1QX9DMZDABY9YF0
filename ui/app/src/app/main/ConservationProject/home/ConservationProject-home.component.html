@@ -1,0 +1,46 @@
+<o-form-layout-manager attr="ConservationProject" mode="tab" title="CONSERVATIONPROJECT">
+    <div fxFill fxLayout="column" fxLayoutAlign="start">
+        <o-table 
+            attr="ConservationProjectTable" 
+            service="ConservationProject" 
+            entity="ConservationProject" 
+            title="CONSERVATIONPROJECT"
+            keys="id"
+            columns="name;species_target_id;start_date;end_date;id" 
+            header-actions="R;D"
+            visible-columns="name;species_target_id;start_date;end_date;id"  
+            sort-columns="name" 
+            query-rows="20" 
+            quick-filter="yes"
+            row-height="medium" 
+            select-all-checkbox="true" 
+            pageable="yes"  
+            auto-adjust="true" 
+            virtual-scroll="yes" 
+            edition-mode="dblclick"
+            horizontal-scroll="yes"
+            show-title="yes"
+            export-button="yes">
+            
+            <o-table-column #name attr="name" title=" name*" editable="no" required="no" content-align="left"></o-table-column>
+            
+            <o-table-column attr="species_target_id" title="species_target_id">
+    <o-table-cell-renderer-service attr="species_target_id" 
+        service="Animal" entity="AnimalType" columns="id;common_name"
+        parent-keys="id:species_target_id"
+        value-column="common_name" keys="species_target_id"
+        visible-columns="common_name" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+            
+            <o-date-input #start_date attr="start_date" type="timestamp" label="start_date" editable="no" required="no" format="LL" fxFlex="20%" class="form-field"></o-date-input>
+            
+            <o-date-input #end_date attr="end_date" type="timestamp" label="end_date" editable="no" required="no" format="LL" fxFlex="20%" class="form-field"></o-date-input>
+            
+            <o-table-column #id attr="id" title="id" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+            
+            <o-table-context-menu></o-table-context-menu>
+            <o-table-paginator page-size-options="24;48;96"></o-table-paginator>
+        </o-table>
+    </div>
+</o-form-layout-manager>

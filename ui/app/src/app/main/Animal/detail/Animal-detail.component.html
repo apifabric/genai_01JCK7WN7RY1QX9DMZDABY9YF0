@@ -1,0 +1,201 @@
+<div class="container">
+<o-form-container breadcrumb="yes" breadcrumb-label-columns="common_name" breadcrumb-separator=", " class="fill-form">
+      <o-form #form attr="Animal_form_edit" 
+        service="Animal" 
+        entity="Animal" 
+        fxLayout="column" 
+        show-header="yes" 
+        header-actions="R;I;U;D"
+        #oDetailForm keys="id" 
+        keys-sql-types="INTEGER" 
+        show-header-navigation="yes"
+        (onDataLoaded)="onDataLoaded($event)">
+
+  <o-row attr="row1" layout-align="start stretch">
+    <div fxLayout="row wrap" fxLayoutAlign="start start" fxFlex fxLayoutGap="14px">
+      
+      <o-text-input #common_name attr="common_name" label=" common_name*" enabled="yes" required="no" fxFlex="20%" class="form-field"></o-text-input>
+      
+      <o-list-picker 
+        attr="habitat_id"
+        service="Habitat" 
+        entity="HabitatType"
+        fxFlex="30" 
+        query-on-init="no" 
+        query-on-bind="yes" 
+        required="no" 
+        enabled="yes" 
+        filter="yes"
+        value-column="id" 
+        value-column-type="INTEGER"  
+        keys="id" 
+        columns="id;habitat_id;name" 
+        title="habitat_id"
+        visible-columns="id;name" 
+        separator=" - " width="680px" class="form-field">
+</o-list-picker>
+      
+      <o-text-input #species attr="species" label="species" enabled="yes" required="no" fxFlex="20%" class="form-field"></o-text-input>
+      
+      <o-integer-input #population attr="population" label="population" type="integer" editable="no" required="no" ></o-integer-input>
+      
+      <o-integer-input #id attr="id" label="id" type="integer" editable="no" required="no" ></o-integer-input>
+      
+    </div>
+  </o-row>
+      
+      <mat-tab-group fxFill>
+        
+        <mat-tab label="CONSERVATIONPROJECT-species_target_id">
+    <div layout-padding>
+      <o-table 
+        attr="ConservationProjectTable" 
+        service="ConservationProject" 
+        entity="ConservationProject" 
+        keys="id"
+        parent-keys="species_target_id:id"
+        columns="name;species_target_id;start_date;end_date;id"  
+        horizontal-scroll="yes"
+        detail-form-route="ConservationProject" 
+        edit-form-route="ConservationProject"
+        visible-columns="name;species_target_id;start_date;end_date;id"  
+        sort-columns="name" 
+        query-rows="25" 
+        quick-filter="yes"
+        row-height="medium" 
+        select-all-checkbox="true" 
+        pageable="yes"  
+        auto-adjust="true" 
+        virtual-scroll="yes" 
+        insert-button="yes" 
+        delete-button="yes" 
+        fixed-header="true" 
+        class="vertical-padding-8"
+        edition-mode="dblclick" 
+        horizontal-scroll="yes" class="fill-form">
+        
+          <o-table-column #name attr="name" title=" name*" editable="no" required="no" content-align="left"></o-table-column>
+        
+          <o-table-column attr="species_target_id" title="species_target_id">
+    <o-table-cell-renderer-service attr="species_target_id" 
+        service="Animal" entity="AnimalType" columns="id;common_name"
+        parent-keys="id:species_target_id"
+        value-column="common_name" keys="species_target_id"
+        visible-columns="common_name" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+        
+          <o-date-input #start_date attr="start_date" type="timestamp" label="start_date" editable="no" required="no" format="LL" fxFlex="20%" class="form-field"></o-date-input>
+        
+          <o-date-input #end_date attr="end_date" type="timestamp" label="end_date" editable="no" required="no" format="LL" fxFlex="20%" class="form-field"></o-date-input>
+        
+          <o-table-column #id attr="id" title="id" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+        
+        <o-table-paginator page-size-options="25;50;100"></o-table-paginator>
+      </o-table>
+    </div>
+</mat-tab>
+        
+        <mat-tab label="ENDANGEREDSPECIESLIST-species_id">
+    <div layout-padding>
+      <o-table 
+        attr="EndangeredSpeciesListTable" 
+        service="EndangeredSpeciesList" 
+        entity="EndangeredSpeciesList" 
+        keys="id"
+        parent-keys="species_id:id"
+        columns="id;species_id;status;list_date"  
+        horizontal-scroll="yes"
+        detail-form-route="EndangeredSpeciesList" 
+        edit-form-route="EndangeredSpeciesList"
+        visible-columns="id;species_id;status;list_date"  
+        sort-columns="id" 
+        query-rows="25" 
+        quick-filter="yes"
+        row-height="medium" 
+        select-all-checkbox="true" 
+        pageable="yes"  
+        auto-adjust="true" 
+        virtual-scroll="yes" 
+        insert-button="yes" 
+        delete-button="yes" 
+        fixed-header="true" 
+        class="vertical-padding-8"
+        edition-mode="dblclick" 
+        horizontal-scroll="yes" class="fill-form">
+        
+          <o-table-column #id attr="id" title=" id*" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+        
+          <o-table-column attr="species_id" title="species_id">
+    <o-table-cell-renderer-service attr="species_id" 
+        service="Animal" entity="AnimalType" columns="id;common_name"
+        parent-keys="id:species_id"
+        value-column="common_name" keys="species_id"
+        visible-columns="common_name" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+        
+          <o-table-column #status attr="status" title="status" editable="no" required="no" content-align="left"></o-table-column>
+        
+          <o-date-input #list_date attr="list_date" type="timestamp" label="list_date" editable="no" required="no" format="LL" fxFlex="20%" class="form-field"></o-date-input>
+        
+        <o-table-paginator page-size-options="25;50;100"></o-table-paginator>
+      </o-table>
+    </div>
+</mat-tab>
+        
+        <mat-tab label="ILLEGALACTIVITY-involved_species_id">
+    <div layout-padding>
+      <o-table 
+        attr="IllegalActivityTable" 
+        service="IllegalActivity" 
+        entity="IllegalActivity" 
+        keys="id"
+        parent-keys="involved_species_id:id"
+        columns="id;involved_species_id;Type;report_date;location"  
+        horizontal-scroll="yes"
+        detail-form-route="IllegalActivity" 
+        edit-form-route="IllegalActivity"
+        visible-columns="id;involved_species_id;Type;report_date;location"  
+        sort-columns="id" 
+        query-rows="25" 
+        quick-filter="yes"
+        row-height="medium" 
+        select-all-checkbox="true" 
+        pageable="yes"  
+        auto-adjust="true" 
+        virtual-scroll="yes" 
+        insert-button="yes" 
+        delete-button="yes" 
+        fixed-header="true" 
+        class="vertical-padding-8"
+        edition-mode="dblclick" 
+        horizontal-scroll="yes" class="fill-form">
+        
+          <o-table-column #id attr="id" title=" id*" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+        
+          <o-table-column attr="involved_species_id" title="involved_species_id">
+    <o-table-cell-renderer-service attr="involved_species_id" 
+        service="Animal" entity="AnimalType" columns="id;common_name"
+        parent-keys="id:involved_species_id"
+        value-column="common_name" keys="involved_species_id"
+        visible-columns="common_name" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+        
+          <o-table-column #Type attr="Type" title="Type" editable="no" required="no" content-align="left"></o-table-column>
+        
+          <o-date-input #report_date attr="report_date" type="timestamp" label="report_date" editable="no" required="no" format="LL" fxFlex="20%" class="form-field"></o-date-input>
+        
+          <o-table-column #location attr="location" title="location" editable="no" required="no" content-align="left"></o-table-column>
+        
+        <o-table-paginator page-size-options="25;50;100"></o-table-paginator>
+      </o-table>
+    </div>
+</mat-tab>
+        
+      </mat-tab-group>
+      
+    </o-form>
+  </o-form-container>
+</div>

@@ -1,0 +1,49 @@
+<o-form-layout-manager attr="ResearcherStudyLink" mode="tab" title="RESEARCHERSTUDYLINK">
+    <div fxFill fxLayout="column" fxLayoutAlign="start">
+        <o-table 
+            attr="ResearcherStudyLinkTable" 
+            service="ResearcherStudyLink" 
+            entity="ResearcherStudyLink" 
+            title="RESEARCHERSTUDYLINK"
+            keys="id"
+            columns="id;researcher_id;study_id" 
+            header-actions="R;D"
+            visible-columns="id;researcher_id;study_id"  
+            sort-columns="id" 
+            query-rows="20" 
+            quick-filter="yes"
+            row-height="medium" 
+            select-all-checkbox="true" 
+            pageable="yes"  
+            auto-adjust="true" 
+            virtual-scroll="yes" 
+            edition-mode="dblclick"
+            horizontal-scroll="yes"
+            show-title="yes"
+            export-button="yes">
+            
+            <o-table-column #id attr="id" title=" id*" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+            
+            <o-table-column attr="researcher_id" title="researcher_id">
+    <o-table-cell-renderer-service attr="researcher_id" 
+        service="Researcher" entity="ResearcherType" columns="id;name"
+        parent-keys="id:researcher_id"
+        value-column="name" keys="researcher_id"
+        visible-columns="name" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+            
+            <o-table-column attr="study_id" title="study_id">
+    <o-table-cell-renderer-service attr="study_id" 
+        service="ResearchStudy" entity="ResearchStudyType" columns="id;id"
+        parent-keys="id:study_id"
+        value-column="id" keys="study_id"
+        visible-columns="id" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+            
+            <o-table-context-menu></o-table-context-menu>
+            <o-table-paginator page-size-options="24;48;96"></o-table-paginator>
+        </o-table>
+    </div>
+</o-form-layout-manager>

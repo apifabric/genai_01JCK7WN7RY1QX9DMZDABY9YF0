@@ -1,0 +1,79 @@
+{
+    "models": [
+        {
+            "classname": "Animal",
+            "code": "class Animal(Base):\n    \"\"\"description: Represents an animal in the tropical rainforest.\"\"\"\n    __tablename__ = 'animals'\n    id = Column(Integer, primary_key=True)\n    species = Column(String)\n    common_name = Column(String)\n    habitat_id = Column(Integer, ForeignKey('habitats.id'))\n    population = Column(Integer)",
+            "description": "Represents an animal in the tropical rainforest.",
+            "name": "Animal"
+        },
+        {
+            "classname": "Habitat",
+            "code": "class Habitat(Base):\n    \"\"\"description: Represents different types of habitats in the rainforest.\"\"\"\n    __tablename__ = 'habitats'\n    id = Column(Integer, primary_key=True)\n    name = Column(String)\n    climate = Column(String)",
+            "description": "Represents different types of habitats in the rainforest.",
+            "name": "Habitat"
+        },
+        {
+            "classname": "ConservationProject",
+            "code": "class ConservationProject(Base):\n    \"\"\"description: Represents conservation projects aimed at preserving wildlife.\"\"\"\n    __tablename__ = 'conservation_projects'\n    id = Column(Integer, primary_key=True)\n    name = Column(String)\n    start_date = Column(DateTime)\n    end_date = Column(DateTime, nullable=True)\n    species_target_id = Column(Integer, ForeignKey('animals.id'))",
+            "description": "Represents conservation projects aimed at preserving wildlife.",
+            "name": "ConservationProject"
+        },
+        {
+            "classname": "ResearchStudy",
+            "code": "class ResearchStudy(Base):\n    \"\"\"description: Represents scientific research studies conducted in the rainforest.\"\"\"\n    __tablename__ = 'research_studies'\n    id = Column(Integer, primary_key=True)\n    title = Column(String)\n    focus_area = Column(String)\n    start_date = Column(DateTime)\n    end_date = Column(DateTime, nullable=True)\n    study_lead = Column(String)",
+            "description": "Represents scientific research studies conducted in the rainforest.",
+            "name": "ResearchStudy"
+        },
+        {
+            "classname": "Researcher",
+            "code": "class Researcher(Base):\n    \"\"\"description: Represents a researcher involved in rainforest studies.\"\"\"\n    __tablename__ = 'researchers'\n    id = Column(Integer, primary_key=True)\n    name = Column(String)\n    specialization = Column(String)",
+            "description": "Represents a researcher involved in rainforest studies.",
+            "name": "Researcher"
+        },
+        {
+            "classname": "ResearcherStudyLink",
+            "code": "class ResearcherStudyLink(Base):\n    \"\"\"description: Represents the link between researchers and research studies.\"\"\"\n    __tablename__ = 'researcher_study_links'\n    id = Column(Integer, primary_key=True)\n    researcher_id = Column(Integer, ForeignKey('researchers.id'))\n    study_id = Column(Integer, ForeignKey('research_studies.id'))",
+            "description": "Represents the link between researchers and research studies.",
+            "name": "ResearcherStudyLink"
+        },
+        {
+            "classname": "IllegalActivity",
+            "code": "class IllegalActivity(Base):\n    \"\"\"description: Represents illegal activities reported in the rainforest.\"\"\"\n    __tablename__ = 'illegal_activities'\n    id = Column(Integer, primary_key=True)\n    type = Column(String)\n    report_date = Column(DateTime)\n    location = Column(String)\n    involved_species_id = Column(Integer, ForeignKey('animals.id'))",
+            "description": "Represents illegal activities reported in the rainforest.",
+            "name": "IllegalActivity"
+        },
+        {
+            "classname": "Ranger",
+            "code": "class Ranger(Base):\n    \"\"\"description: Represents a ranger responsible for patrolling the rainforest.\"\"\"\n    __tablename__ = 'rangers'\n    id = Column(Integer, primary_key=True)\n    name = Column(String)\n    assigned_area = Column(String)\n    experience_years = Column(Integer)",
+            "description": "Represents a ranger responsible for patrolling the rainforest.",
+            "name": "Ranger"
+        },
+        {
+            "classname": "RangerPatrol",
+            "code": "class RangerPatrol(Base):\n    \"\"\"description: Represents ranger patrols conducted in the rainforest.\"\"\"\n    __tablename__ = 'ranger_patrols'\n    id = Column(Integer, primary_key=True)\n    ranger_id = Column(Integer, ForeignKey('rangers.id'))\n    date = Column(DateTime)\n    area_patrolled = Column(String)",
+            "description": "Represents ranger patrols conducted in the rainforest.",
+            "name": "RangerPatrol"
+        },
+        {
+            "classname": "PatrolIncident",
+            "code": "class PatrolIncident(Base):\n    \"\"\"description: Represents incidents reported during ranger patrols.\"\"\"\n    __tablename__ = 'patrol_incidents'\n    id = Column(Integer, primary_key=True)\n    patrol_id = Column(Integer, ForeignKey('ranger_patrols.id'))\n    description = Column(String)\n    date_reported = Column(DateTime)",
+            "description": "Represents incidents reported during ranger patrols.",
+            "name": "PatrolIncident"
+        },
+        {
+            "classname": "Plant",
+            "code": "class Plant(Base):\n    \"\"\"description: Represents a plant species found in the rainforest.\"\"\"\n    __tablename__ = 'plants'\n    id = Column(Integer, primary_key=True)\n    species_name = Column(String)\n    common_name = Column(String)\n    habitat_id = Column(Integer, ForeignKey('habitats.id'))",
+            "description": "Represents a plant species found in the rainforest.",
+            "name": "Plant"
+        },
+        {
+            "classname": "EndangeredSpeciesList",
+            "code": "class EndangeredSpeciesList(Base):\n    \"\"\"description: Represents lists of endangered species.\"\"\"\n    __tablename__ = 'endangered_species_lists'\n    id = Column(Integer, primary_key=True)\n    species_id = Column(Integer, ForeignKey('animals.id'))\n    status = Column(String)\n    list_date = Column(DateTime)",
+            "description": "Represents lists of endangered species.",
+            "name": "EndangeredSpeciesList"
+        }
+    ],
+    "rules": [],
+    "test_data": "from datetime import datetime\n\nhabitat1 = Habitat(id=1, name='Amazon Rainforest', climate='Tropical')\nhabitat2 = Habitat(id=2, name='Congo Basin', climate='Humid')\nhabitat3 = Habitat(id=3, name='Southeast Asian Rainforest', climate='Equatorial')\nhabitat4 = Habitat(id=4, name='Daintree Rainforest', climate='Wet Tropical')\n\nanimal1 = Animal(id=1, species='Panthera onca', common_name='Jaguar', habitat_id=1, population=150)\nanimal2 = Animal(id=2, species='Gorilla gorilla', common_name='Western Gorilla', habitat_id=2, population=300)\nanimal3 = Animal(id=3, species='Orangutan', common_name='Orangutan', habitat_id=3, population=200)\nanimal4 = Animal(id=4, species='Cassowary', common_name='Cassowary', habitat_id=4, population=50)\n\nconservation_project1 = ConservationProject(id=1, name='Save the Jaguar', start_date=datetime(2021, 5, 1), end_date=None, species_target_id=1)\nconservation_project2 = ConservationProject(id=2, name='Gorilla Protection', start_date=datetime(2020, 3, 15), end_date=None, species_target_id=2)\nconservation_project3 = ConservationProject(id=3, name='Orangutan Rescue', start_date=datetime(2022, 8, 20), end_date=None, species_target_id=3)\nconservation_project4 = ConservationProject(id=4, name='Cassowary Conservation', start_date=datetime(2019, 11, 10), end_date=None, species_target_id=4)\n\nresearch_study1 = ResearchStudy(id=1, title='Jaguar Behavior Study', focus_area='Behavioral Science', start_date=datetime(2021, 6, 9), end_date=datetime(2023, 6, 9), study_lead='Dr. Smith')\nresearch_study2 = ResearchStudy(id=2, title='Gorilla Dietary Patterns', focus_area='Nutrition', start_date=datetime(2020, 7, 22), end_date=datetime(2022, 7, 22), study_lead='Dr. Jones')\nresearch_study3 = ResearchStudy(id=3, title='Orangutan Social Structures', focus_area='Social Science', start_date=datetime(2023, 1, 5), end_date=None, study_lead='Dr. Brown')\nresearch_study4 = ResearchStudy(id=4, title='Cassowary Habitat Preferences', focus_area='Ecology', start_date=datetime(2019, 10, 1), end_date=datetime(2021, 10, 1), study_lead='Dr. Green')\n\nresearcher1 = Researcher(id=1, name='John Doe', specialization='Zoology')\nresearcher2 = Researcher(id=2, name='Jane Roe', specialization='Botany')\nresearcher3 = Researcher(id=3, name='Jim Bo', specialization='Ecology')\nresearcher4 = Researcher(id=4, name='Jill Woo', specialization='Conservation Science')\n\nresearcher_study_link1 = ResearcherStudyLink(id=1, researcher_id=1, study_id=1)\nresearcher_study_link2 = ResearcherStudyLink(id=2, researcher_id=2, study_id=2)\nresearcher_study_link3 = ResearcherStudyLink(id=3, researcher_id=3, study_id=3)\nresearcher_study_link4 = ResearcherStudyLink(id=4, researcher_id=4, study_id=4)\n\nillegal_activity1 = IllegalActivity(id=1, type='Poaching', report_date=datetime(2023, 4, 20), location='Section A', involved_species_id=1)\nillegal_activity2 = IllegalActivity(id=2, type='Logging', report_date=datetime(2022, 8, 14), location='Section B', involved_species_id=2)\nillegal_activity3 = IllegalActivity(id=3, type='Mining', report_date=datetime(2021, 3, 2), location='Section C', involved_species_id=3)\nillegal_activity4 = IllegalActivity(id=4, type='Fire', report_date=datetime(2020, 12, 11), location='Section D', involved_species_id=4)\n\nranger1 = Ranger(id=1, name='Ranger Rick', assigned_area='North', experience_years=5)\nranger2 = Ranger(id=2, name='Ranger Sue', assigned_area='South', experience_years=10)\nranger3 = Ranger(id=3, name='Ranger Tom', assigned_area='East', experience_years=3)\nranger4 = Ranger(id=4, name='Ranger Pam', assigned_area='West', experience_years=7)\n\nranger_patrol1 = RangerPatrol(id=1, ranger_id=1, date=datetime(2023, 4, 5), area_patrolled='North')\nranger_patrol2 = RangerPatrol(id=2, ranger_id=2, date=datetime(2022, 3, 10), area_patrolled='South')\nranger_patrol3 = RangerPatrol(id=3, ranger_id=3, date=datetime(2021, 8, 15), area_patrolled='East')\nranger_patrol4 = RangerPatrol(id=4, ranger_id=4, date=datetime(2020, 1, 20), area_patrolled='West')\n\npatrol_incident1 = PatrolIncident(id=1, patrol_id=1, description='Signs of poaching.', date_reported=datetime(2023, 4, 5))\npatrol_incident2 = PatrolIncident(id=2, patrol_id=2, description='Illegal logging detected.', date_reported=datetime(2022, 3, 10))\npatrol_incident3 = PatrolIncident(id=3, patrol_id=3, description='Mining operations noticed.', date_reported=datetime(2021, 8, 15))\npatrol_incident4 = PatrolIncident(id=4, patrol_id=4, description='Forest fire spotted.', date_reported=datetime(2020, 1, 20))\n\nplant1 = Plant(id=1, species_name='Ficus lyrata', common_name='Fiddle Leaf Fig', habitat_id=1)\nplant2 = Plant(id=2, species_name='Monstera deliciosa', common_name='Swiss Cheese Plant', habitat_id=2)\nplant3 = Plant(id=3, species_name='Dracaena trifasciata', common_name='Snake Plant', habitat_id=3)\nplant4 = Plant(id=4, species_name='Epipremnum aureum', common_name='Golden Pothos', habitat_id=4)\n\nendangered_species_list1 = EndangeredSpeciesList(id=1, species_id=1, status='Endangered', list_date=datetime(2021, 12, 1))\nendangered_species_list2 = EndangeredSpeciesList(id=2, species_id=2, status='Critically Endangered', list_date=datetime(2020, 6, 15))\nendangered_species_list3 = EndangeredSpeciesList(id=3, species_id=3, status='Endangered', list_date=datetime(2023, 3, 20))\nendangered_species_list4 = EndangeredSpeciesList(id=4, species_id=4, status='Vulnerable', list_date=datetime(2022, 7, 30))",
+    "name": "TropicalWildlifeMgmt"
+}

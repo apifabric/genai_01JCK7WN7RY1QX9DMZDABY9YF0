@@ -1,0 +1,496 @@
+about:
+  date: November 13, 2024 17:08:01
+  recent_changes: works with modified safrs-react-admin
+  version: 0.0.0
+api_root: '{http_type}://{swagger_host}:{port}/{api}'
+authentication: '{system-default}'
+entities:
+  Animal:
+    columns:
+    - label: ' common_name*'
+      name: common_name
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: habitat_id
+      template: integer
+      type: INTEGER
+    - name: species
+      template: text
+      type: VARCHAR
+    - name: population
+      template: integer
+      type: INTEGER
+    - name: id
+      template: integer
+      type: INTEGER
+    description: Represents an animal in the tropical rainforest.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: common_name
+    hidden: {}
+    home_template: home_template.html
+    info_list: Represents an animal in the tropical rainforest.
+    label: Animal
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - species_target_id
+      name: ConservationProjectList
+      resource: ConservationProject
+    - direction: tomany
+      fks:
+      - species_id
+      name: EndangeredSpeciesListList
+      resource: EndangeredSpeciesList
+    - direction: tomany
+      fks:
+      - involved_species_id
+      name: IllegalActivityList
+      resource: IllegalActivity
+    - direction: toone
+      fks:
+      - habitat_id
+      name: habitat
+      resource: Habitat
+    type: Animal
+  ConservationProject:
+    columns:
+    - label: ' name*'
+      name: name
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: species_target_id
+      template: integer
+      type: INTEGER
+    - name: start_date
+      type: DATETIME
+    - name: end_date
+      type: DATETIME
+    - name: id
+      template: integer
+      type: INTEGER
+    description: Represents conservation projects aimed at preserving wildlife.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: name
+    hidden: {}
+    home_template: home_template.html
+    info_list: Represents conservation projects aimed at preserving wildlife.
+    label: ConservationProject
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - species_target_id
+      name: species_target
+      resource: Animal
+    type: ConservationProject
+  EndangeredSpeciesList:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: species_id
+      template: integer
+      type: INTEGER
+    - name: status
+      template: text
+      type: VARCHAR
+    - name: list_date
+      type: DATETIME
+    description: Represents lists of endangered species.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    hidden: {}
+    home_template: home_template.html
+    info_list: Represents lists of endangered species.
+    label: EndangeredSpeciesList
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - species_id
+      name: species
+      resource: Animal
+    type: EndangeredSpeciesList
+  Habitat:
+    columns:
+    - label: ' name*'
+      name: name
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: climate
+      template: text
+      type: VARCHAR
+    - name: id
+      template: integer
+      type: INTEGER
+    description: Represents different types of habitats in the rainforest.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: name
+    hidden: {}
+    home_template: home_template.html
+    info_list: Represents different types of habitats in the rainforest.
+    label: Habitat
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - habitat_id
+      name: AnimalList
+      resource: Animal
+    - direction: tomany
+      fks:
+      - habitat_id
+      name: PlantList
+      resource: Plant
+    type: Habitat
+  IllegalActivity:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: involved_species_id
+      template: integer
+      type: INTEGER
+    - name: Type
+      template: text
+      type: VARCHAR
+    - name: report_date
+      type: DATETIME
+    - name: location
+      template: text
+      type: VARCHAR
+    description: Represents illegal activities reported in the rainforest.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    hidden: {}
+    home_template: home_template.html
+    info_list: Represents illegal activities reported in the rainforest.
+    label: IllegalActivity
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - involved_species_id
+      name: involved_species
+      resource: Animal
+    type: IllegalActivity
+  PatrolIncident:
+    columns:
+    - label: ' description*'
+      name: description
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: patrol_id
+      template: integer
+      type: INTEGER
+    - name: id
+      template: integer
+      type: INTEGER
+    - name: date_reported
+      type: DATETIME
+    description: Represents incidents reported during ranger patrols.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: description
+    hidden: {}
+    home_template: home_template.html
+    info_list: Represents incidents reported during ranger patrols.
+    label: PatrolIncident
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - patrol_id
+      name: patrol
+      resource: RangerPatrol
+    type: PatrolIncident
+  Plant:
+    columns:
+    - label: ' species_name*'
+      name: species_name
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: habitat_id
+      template: integer
+      type: INTEGER
+    - name: common_name
+      template: text
+      type: VARCHAR
+    - name: id
+      template: integer
+      type: INTEGER
+    description: Represents a plant species found in the rainforest.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: species_name
+    hidden: {}
+    home_template: home_template.html
+    info_list: Represents a plant species found in the rainforest.
+    label: Plant
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - habitat_id
+      name: habitat
+      resource: Habitat
+    type: Plant
+  Ranger:
+    columns:
+    - label: ' name*'
+      name: name
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: assigned_area
+      template: text
+      type: VARCHAR
+    - name: experience_years
+      template: integer
+      type: INTEGER
+    - name: id
+      template: integer
+      type: INTEGER
+    description: Represents a ranger responsible for patrolling the rainforest.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: name
+    hidden: {}
+    home_template: home_template.html
+    info_list: Represents a ranger responsible for patrolling the rainforest.
+    label: Ranger
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - ranger_id
+      name: RangerPatrolList
+      resource: RangerPatrol
+    type: Ranger
+  RangerPatrol:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: ranger_id
+      template: integer
+      type: INTEGER
+    - name: date
+      type: DATETIME
+    - name: area_patrolled
+      template: text
+      type: VARCHAR
+    description: Represents ranger patrols conducted in the rainforest.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    hidden: {}
+    home_template: home_template.html
+    info_list: Represents ranger patrols conducted in the rainforest.
+    label: RangerPatrol
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - patrol_id
+      name: PatrolIncidentList
+      resource: PatrolIncident
+    - direction: toone
+      fks:
+      - ranger_id
+      name: ranger
+      resource: Ranger
+    type: RangerPatrol
+  ResearchStudy:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: title
+      template: text
+      type: VARCHAR
+    - name: focus_area
+      template: text
+      type: VARCHAR
+    - name: start_date
+      type: DATETIME
+    - name: end_date
+      type: DATETIME
+    - name: study_lead
+      template: text
+      type: VARCHAR
+    description: Represents scientific research studies conducted in the rainforest.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    hidden: {}
+    home_template: home_template.html
+    info_list: Represents scientific research studies conducted in the rainforest.
+    label: ResearchStudy
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - study_id
+      name: ResearcherStudyLinkList
+      resource: ResearcherStudyLink
+    type: ResearchStudy
+  Researcher:
+    columns:
+    - label: ' name*'
+      name: name
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: specialization
+      template: text
+      type: VARCHAR
+    - name: id
+      template: integer
+      type: INTEGER
+    description: Represents a researcher involved in rainforest studies.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: name
+    hidden: {}
+    home_template: home_template.html
+    info_list: Represents a researcher involved in rainforest studies.
+    label: Researcher
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - researcher_id
+      name: ResearcherStudyLinkList
+      resource: ResearcherStudyLink
+    type: Researcher
+  ResearcherStudyLink:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: researcher_id
+      template: integer
+      type: INTEGER
+    - name: study_id
+      template: integer
+      type: INTEGER
+    description: Represents the link between researchers and research studies.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    hidden: {}
+    home_template: home_template.html
+    info_list: Represents the link between researchers and research studies.
+    label: ResearcherStudyLink
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - researcher_id
+      name: researcher
+      resource: Researcher
+    - direction: toone
+      fks:
+      - study_id
+      name: study
+      resource: ResearchStudy
+    type: ResearcherStudyLink
+settings:
+  HomeJS: /admin-app/home.js
+  max_list_columns: 8
+  style_guide:
+    applicationLocales:
+    - en
+    - es
+    currency_symbol: $
+    currency_symbol_position: left
+    date_format: LL
+    decimal_max: '1000000000'
+    decimal_min: '0'
+    decimal_separator: .
+    edit_on_mode: dblclick
+    exclude_listpicker: false
+    include_translation: false
+    keycloak_client_id: alsclient
+    keycloak_realm: kcals
+    keycloak_url: http://localhost:8080
+    locale: en
+    max_decimal_digits: '4'
+    min_decimal_digits: '2'
+    mode: tab
+    pick_style: list
+    serviceType: OntimizeEE
+    startSessionPath: /auth/login
+    style: light
+    thousand_separator: ','
+    use_keycloak: false

@@ -1,0 +1,310 @@
+about:
+  date: November 13, 2024 17:08:01
+  recent_changes: works with modified safrs-react-admin
+  version: 0.0.0
+api_root: '{http_type}://{swagger_host}:{port}/{api}'
+authentication: '{system-default}'
+info:
+  number_relationships: 9
+  number_tables: 12
+info_toggle_checked: true
+resources:
+  Animal:
+    attributes:
+    - label: ' common_name*'
+      name: common_name
+      search: true
+      sort: true
+    - name: habitat_id
+    - name: species
+    - name: population
+    - name: id
+    description: Represents an animal in the tropical rainforest.
+    info_list: Represents an animal in the tropical rainforest.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - species_target_id
+      name: ConservationProjectList
+      resource: ConservationProject
+    - direction: tomany
+      fks:
+      - species_id
+      name: EndangeredSpeciesListList
+      resource: EndangeredSpeciesList
+    - direction: tomany
+      fks:
+      - involved_species_id
+      name: IllegalActivityList
+      resource: IllegalActivity
+    - direction: toone
+      fks:
+      - habitat_id
+      name: habitat
+      resource: Habitat
+    type: Animal
+    user_key: common_name
+  ConservationProject:
+    attributes:
+    - label: ' name*'
+      name: name
+      search: true
+      sort: true
+    - name: species_target_id
+    - name: start_date
+      type: DATETIME
+    - name: end_date
+      type: DATETIME
+    - name: id
+    description: Represents conservation projects aimed at preserving wildlife.
+    info_list: Represents conservation projects aimed at preserving wildlife.
+    tab_groups:
+    - direction: toone
+      fks:
+      - species_target_id
+      name: species_target
+      resource: Animal
+    type: ConservationProject
+    user_key: name
+  EndangeredSpeciesList:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: species_id
+    - name: status
+    - name: list_date
+      type: DATETIME
+    description: Represents lists of endangered species.
+    info_list: Represents lists of endangered species.
+    tab_groups:
+    - direction: toone
+      fks:
+      - species_id
+      name: species
+      resource: Animal
+    type: EndangeredSpeciesList
+    user_key: id
+  Habitat:
+    attributes:
+    - label: ' name*'
+      name: name
+      search: true
+      sort: true
+    - name: climate
+    - name: id
+    description: Represents different types of habitats in the rainforest.
+    info_list: Represents different types of habitats in the rainforest.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - habitat_id
+      name: AnimalList
+      resource: Animal
+    - direction: tomany
+      fks:
+      - habitat_id
+      name: PlantList
+      resource: Plant
+    type: Habitat
+    user_key: name
+  IllegalActivity:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: involved_species_id
+    - name: Type
+    - name: report_date
+      type: DATETIME
+    - name: location
+    description: Represents illegal activities reported in the rainforest.
+    info_list: Represents illegal activities reported in the rainforest.
+    tab_groups:
+    - direction: toone
+      fks:
+      - involved_species_id
+      name: involved_species
+      resource: Animal
+    type: IllegalActivity
+    user_key: id
+  PatrolIncident:
+    attributes:
+    - label: ' description*'
+      name: description
+      search: true
+      sort: true
+    - name: patrol_id
+    - name: id
+    - name: date_reported
+      type: DATETIME
+    description: Represents incidents reported during ranger patrols.
+    info_list: Represents incidents reported during ranger patrols.
+    tab_groups:
+    - direction: toone
+      fks:
+      - patrol_id
+      name: patrol
+      resource: RangerPatrol
+    type: PatrolIncident
+    user_key: description
+  Plant:
+    attributes:
+    - label: ' species_name*'
+      name: species_name
+      search: true
+      sort: true
+    - name: habitat_id
+    - name: common_name
+    - name: id
+    description: Represents a plant species found in the rainforest.
+    info_list: Represents a plant species found in the rainforest.
+    tab_groups:
+    - direction: toone
+      fks:
+      - habitat_id
+      name: habitat
+      resource: Habitat
+    type: Plant
+    user_key: species_name
+  Ranger:
+    attributes:
+    - label: ' name*'
+      name: name
+      search: true
+      sort: true
+    - name: assigned_area
+    - name: experience_years
+    - name: id
+    description: Represents a ranger responsible for patrolling the rainforest.
+    info_list: Represents a ranger responsible for patrolling the rainforest.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - ranger_id
+      name: RangerPatrolList
+      resource: RangerPatrol
+    type: Ranger
+    user_key: name
+  RangerPatrol:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: ranger_id
+    - name: date
+      type: DATETIME
+    - name: area_patrolled
+    description: Represents ranger patrols conducted in the rainforest.
+    info_list: Represents ranger patrols conducted in the rainforest.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - patrol_id
+      name: PatrolIncidentList
+      resource: PatrolIncident
+    - direction: toone
+      fks:
+      - ranger_id
+      name: ranger
+      resource: Ranger
+    type: RangerPatrol
+    user_key: id
+  ResearchStudy:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: title
+    - name: focus_area
+    - name: start_date
+      type: DATETIME
+    - name: end_date
+      type: DATETIME
+    - name: study_lead
+    description: Represents scientific research studies conducted in the rainforest.
+    info_list: Represents scientific research studies conducted in the rainforest.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - study_id
+      name: ResearcherStudyLinkList
+      resource: ResearcherStudyLink
+    type: ResearchStudy
+    user_key: id
+  Researcher:
+    attributes:
+    - label: ' name*'
+      name: name
+      search: true
+      sort: true
+    - name: specialization
+    - name: id
+    description: Represents a researcher involved in rainforest studies.
+    info_list: Represents a researcher involved in rainforest studies.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - researcher_id
+      name: ResearcherStudyLinkList
+      resource: ResearcherStudyLink
+    type: Researcher
+    user_key: name
+  ResearcherStudyLink:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: researcher_id
+    - name: study_id
+    description: Represents the link between researchers and research studies.
+    info_list: Represents the link between researchers and research studies.
+    tab_groups:
+    - direction: toone
+      fks:
+      - researcher_id
+      name: researcher
+      resource: Researcher
+    - direction: toone
+      fks:
+      - study_id
+      name: study
+      resource: ResearchStudy
+    type: ResearcherStudyLink
+    user_key: id
+settings:
+  HomeJS: /admin-app/home.js
+  max_list_columns: 8
+  style_guide:
+    applicationLocales:
+    - en
+    - es
+    currency_symbol: $
+    currency_symbol_position: left
+    date_format: LL
+    decimal_max: '1000000000'
+    decimal_min: '0'
+    decimal_separator: .
+    detail_mode: tab
+    edit_on_mode: dblclick
+    exclude_listpicker: false
+    include_translation: 'false'
+    keycloak_client_id: alsclient
+    keycloak_realm: kcals
+    keycloak_url: http://localhost:8080
+    locale: en
+    max_decimal_digits: '4'
+    min_decimal_digits: '2'
+    new_mode: dialog
+    pick_style: list
+    row_height: small,
+    serviceType: OntimizeEE
+    startSessionPath: /auth/login
+    style: light
+    thousand_separator: ','
+    use_keycloak: 'false'
